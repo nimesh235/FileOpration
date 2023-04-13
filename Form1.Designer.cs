@@ -109,10 +109,13 @@
             // 
             // FilelistView
             // 
+            this.FilelistView.AllowDrop = true;
             this.FilelistView.Location = new System.Drawing.Point(13, 159);
             this.FilelistView.Name = "FilelistView";
             this.FilelistView.Size = new System.Drawing.Size(558, 95);
             this.FilelistView.TabIndex = 7;
+            this.FilelistView.DragDrop += new System.Windows.Forms.DragEventHandler(this.FileList_DragDrop);
+            this.FilelistView.DragOver += new System.Windows.Forms.DragEventHandler(this.FileList_DragOver);
             // 
             // CreateButton
             // 
