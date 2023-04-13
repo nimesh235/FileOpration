@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace FileOpration
 {
@@ -43,7 +44,7 @@ namespace FileOpration
             DestinationPath = ConfigurationManager.AppSettings["DestinationPath"];
             SourcePath = ConfigurationManager.AppSettings["SourcePath"];
             NameBox.Text = Name;
-            DestinationtextBox.Text = DestinationPath + "\\" + DateTime.Now.ToString("yyyyMMdd-") + Name;
+            DestinationtextBox.Text = DestinationPath + "\\" + DateTime.Now.ToString("yyyyMMdd-") + Name+"-";
             SourcePathtextBox.Text = SourcePath;
             IsLogWrite =Boolean.Parse(string.IsNullOrEmpty(ConfigurationManager.AppSettings["IsLogWrite"]) ?"False": ConfigurationManager.AppSettings["IsLogWrite"]);
         }
@@ -121,7 +122,7 @@ namespace FileOpration
             {
                 Name = NameBox.Text;
                 SetConfigData("Name", Name);
-                DestinationtextBox.Text = DestinationPath + "\\" + DateTime.Now.ToString("yyyyMMdd-") + Name;
+                DestinationtextBox.Text = DestinationPath + "\\" + DateTime.Now.ToString("yyyyMMdd-") + Name+"-";
             }
         }
 
@@ -138,6 +139,28 @@ namespace FileOpration
             Configuration configuration=ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
             configuration.AppSettings.Settings[key].Value = value;
             configuration.Save(ConfigurationSaveMode.Modified);
+        }
+
+        private void FileList_DragDrop(object sender, DragEventArgs e)
+        {
+            List<string> FileList = new List<string>();
+            string[] files = e.Data.GetData(DataFormats.FileDrop) as string[]; // get all files droppeds  
+            if (files != null && files.Any())
+            {
+                foreach (String file in files)
+                {
+                    FileList.Add(file);
+                }
+                FilelistView.DataSource = FileList;
+            }
+        }
+
+        private void FileList_DragOver(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Link;
+            else
+                e.Effect = DragDropEffects.None;
         }
     }
 }
