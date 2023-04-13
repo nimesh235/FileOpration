@@ -39,6 +39,7 @@
             this.FilelistView = new System.Windows.Forms.ListBox();
             this.CreateButton = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.CleareButton = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,16 +56,19 @@
             // 
             this.NameBox.Location = new System.Drawing.Point(13, 26);
             this.NameBox.Name = "NameBox";
-            this.NameBox.Size = new System.Drawing.Size(558, 20);
+            this.NameBox.Size = new System.Drawing.Size(400, 20);
             this.NameBox.TabIndex = 1;
             this.NameBox.TextChanged += new System.EventHandler(this.NameBox_TextChanged);
             // 
             // DestinationtextBox
             // 
+            this.DestinationtextBox.AllowDrop = true;
             this.DestinationtextBox.Location = new System.Drawing.Point(13, 65);
             this.DestinationtextBox.Name = "DestinationtextBox";
-            this.DestinationtextBox.Size = new System.Drawing.Size(558, 20);
+            this.DestinationtextBox.Size = new System.Drawing.Size(400, 20);
             this.DestinationtextBox.TabIndex = 3;
+            this.DestinationtextBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.DestinationtextBox_DragDrop);
+            this.DestinationtextBox.DragOver += new System.Windows.Forms.DragEventHandler(this.DestinationtextBox_DragOver);
             // 
             // Destinationlabel
             // 
@@ -79,7 +83,7 @@
             // 
             this.SourcePathtextBox.Location = new System.Drawing.Point(13, 104);
             this.SourcePathtextBox.Name = "SourcePathtextBox";
-            this.SourcePathtextBox.Size = new System.Drawing.Size(558, 20);
+            this.SourcePathtextBox.Size = new System.Drawing.Size(400, 20);
             this.SourcePathtextBox.TabIndex = 5;
             this.SourcePathtextBox.TextChanged += new System.EventHandler(this.SourcePathtextBox_TextChanged);
             // 
@@ -101,7 +105,7 @@
             // 
             this.selectfilebutton.Location = new System.Drawing.Point(13, 130);
             this.selectfilebutton.Name = "selectfilebutton";
-            this.selectfilebutton.Size = new System.Drawing.Size(558, 23);
+            this.selectfilebutton.Size = new System.Drawing.Size(400, 23);
             this.selectfilebutton.TabIndex = 6;
             this.selectfilebutton.Text = "Select File";
             this.selectfilebutton.UseVisualStyleBackColor = true;
@@ -110,18 +114,21 @@
             // FilelistView
             // 
             this.FilelistView.AllowDrop = true;
+            this.FilelistView.HorizontalScrollbar = true;
             this.FilelistView.Location = new System.Drawing.Point(13, 159);
             this.FilelistView.Name = "FilelistView";
-            this.FilelistView.Size = new System.Drawing.Size(558, 95);
+            this.FilelistView.Size = new System.Drawing.Size(400, 95);
             this.FilelistView.TabIndex = 7;
             this.FilelistView.DragDrop += new System.Windows.Forms.DragEventHandler(this.FileList_DragDrop);
             this.FilelistView.DragOver += new System.Windows.Forms.DragEventHandler(this.FileList_DragOver);
+            this.FilelistView.MouseHover += new System.EventHandler(this.FilelistView_MouseHover);
+            this.FilelistView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FilelistView_MouseMove);
             // 
             // CreateButton
             // 
             this.CreateButton.Location = new System.Drawing.Point(13, 260);
             this.CreateButton.Name = "CreateButton";
-            this.CreateButton.Size = new System.Drawing.Size(558, 23);
+            this.CreateButton.Size = new System.Drawing.Size(195, 23);
             this.CreateButton.TabIndex = 8;
             this.CreateButton.Text = "Create";
             this.CreateButton.UseVisualStyleBackColor = true;
@@ -138,17 +145,28 @@
             this.flowLayoutPanel1.Controls.Add(this.selectfilebutton);
             this.flowLayoutPanel1.Controls.Add(this.FilelistView);
             this.flowLayoutPanel1.Controls.Add(this.CreateButton);
+            this.flowLayoutPanel1.Controls.Add(this.CleareButton);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(10);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(582, 426);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(420, 308);
             this.flowLayoutPanel1.TabIndex = 9;
+            // 
+            // CleareButton
+            // 
+            this.CleareButton.Location = new System.Drawing.Point(214, 260);
+            this.CleareButton.Name = "CleareButton";
+            this.CleareButton.Size = new System.Drawing.Size(190, 23);
+            this.CleareButton.TabIndex = 9;
+            this.CleareButton.Text = "Cleare";
+            this.CleareButton.UseVisualStyleBackColor = true;
+            this.CleareButton.Click += new System.EventHandler(this.CleareButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(608, 471);
+            this.ClientSize = new System.Drawing.Size(446, 331);
             this.Controls.Add(this.flowLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
@@ -172,6 +190,7 @@
         private System.Windows.Forms.ListBox FilelistView;
         private System.Windows.Forms.Button CreateButton;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.Button CleareButton;
     }
 }
 

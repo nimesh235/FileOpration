@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
+using ToolTip = System.Windows.Forms.ToolTip;
 
 namespace FileOpration
 {
@@ -53,7 +55,11 @@ namespace FileOpration
         {
             try
             {
+                List<string> oldFileList = (List<string>)FilelistView.DataSource;
                 List<string> FileList = new List<string>();
+
+                if (oldFileList != null)
+                    FileList= oldFileList.ToList();
                 foreach (String file in openFileDialog1.FileNames)
                 {
                     FileList.Add(file);
@@ -73,7 +79,7 @@ namespace FileOpration
             //            this.openFileDialog1.Filter =
             //"Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|" +
             //"All files (*.*)|*.*";
-            openFileDialog1.InitialDirectory = SourcePath;
+           // openFileDialog1.InitialDirectory = SourcePath;
             this.openFileDialog1.Multiselect = true;
             this.openFileDialog1.Title = "Select Photos";
             this.openFileDialog1.ShowDialog();
@@ -143,7 +149,12 @@ namespace FileOpration
 
         private void FileList_DragDrop(object sender, DragEventArgs e)
         {
+            //List<string> FileList = new List<string>();
+            List<string> oldFileList = (List<string>)FilelistView.DataSource;
             List<string> FileList = new List<string>();
+
+            if (oldFileList != null)
+                FileList = oldFileList.ToList();
             string[] files = e.Data.GetData(DataFormats.FileDrop) as string[]; // get all files droppeds  
             if (files != null && files.Any())
             {
@@ -161,6 +172,56 @@ namespace FileOpration
                 e.Effect = DragDropEffects.Link;
             else
                 e.Effect = DragDropEffects.None;
+        }
+
+        private void DestinationtextBox_DragDrop(object sender, DragEventArgs e)
+        {
+            List<string> oldFileList = (List<string>)FilelistView.DataSource;
+            List<string> FileList = new List<string>();
+
+            if (oldFileList != null)
+                FileList = oldFileList.ToList();
+
+            string[] files = e.Data.GetData(DataFormats.FileDrop) as string[]; // get all files droppeds  
+            if (files != null && files.Any())
+            {
+                DestinationtextBox.Text = DestinationtextBox.Text = DestinationPath + "\\" + DateTime.Now.ToString("yyyyMMdd-") + Name + "-"+ Path.GetFileNameWithoutExtension(files.First());
+                FileList.Add(files.First());
+                FilelistView.DataSource = FileList;
+            }
+        }
+
+        private void DestinationtextBox_DragOver(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Link;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void CleareButton_Click(object sender, EventArgs e)
+        {
+            DestinationtextBox.Text = DestinationtextBox.Text = DestinationPath + "\\" + DateTime.Now.ToString("yyyyMMdd-") + Name + "-";
+            FilelistView.DataSource = null;
+        }
+
+        private void FilelistView_MouseHover(object sender, EventArgs e)
+        {
+            Point point = FilelistView.PointToClient(Cursor.Position);
+            int index = FilelistView.IndexFromPoint(point);
+            if (index < 0) return;
+            //Do any action with the item
+            FilelistView.SelectedIndex=index;
+        }
+
+        private void FilelistView_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point point = FilelistView.PointToClient(Cursor.Position);
+            int index = FilelistView.IndexFromPoint(point);
+            if (index < 0) return;
+            //Do any action with the item
+            
+            FilelistView.SelectedIndex = index;
         }
     }
 }
